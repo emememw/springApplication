@@ -3,6 +3,12 @@
 
 <ul>
 <c:forEach items="${roles}" var="role">
-	<li>${role.id}</li>
+	
+		<li>
+			<form action="" method="GET">
+				${role.id} 
+				<input type="submit" value="bearbeiten">
+			</form>
+		</li>
 </c:forEach>
 </ul>
