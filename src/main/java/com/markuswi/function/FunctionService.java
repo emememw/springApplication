@@ -8,11 +8,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
 
+import com.markuswi.rolefunction.RoleFunctionService;
+
 @Service
 public class FunctionService {
 
 	@Autowired
 	private FunctionDao functionDao;
+
+	@Autowired
+	private RoleFunctionService roleFunctionService;
 
 	@Autowired
 	private FunctionValidator functionValidator;
@@ -26,7 +31,16 @@ public class FunctionService {
 	}
 
 	public Function saveFunction(Function function) {
-		return functionDao.saveFunction(function);
+		boolean createRoleFunction = false;
+		if (function.getId() == null) {
+			createRoleFunction = true;
+		}
+		function = functionDao.saveFunction(function);
+		if(createRoleFunction) {
+			roleFunctionService.createRoleFunctionForNewFunction(function);
+		}
+		
+		return function;
 	}
 
 	public void deleteFunction(Integer id) {
@@ -34,7 +48,7 @@ public class FunctionService {
 	}
 
 	public List<ObjectError> checkIfFunctionIsValid(Function function) {
-		
+
 		List<ObjectError> errors = new LinkedList<ObjectError>();
 		BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(function, "function");
 		functionValidator.validate(function, bindingResult);
