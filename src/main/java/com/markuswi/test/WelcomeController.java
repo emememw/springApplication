@@ -1,4 +1,4 @@
-package com.markuswi.controller;
+package com.markuswi.test;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

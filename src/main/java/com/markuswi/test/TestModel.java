@@ -1,4 +1,4 @@
-package com.markuswi.controller;
+package com.markuswi.test;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
