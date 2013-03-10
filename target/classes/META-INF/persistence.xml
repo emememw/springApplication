@@ -9,6 +9,7 @@
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/spring" />
 			<property name="hibernate.connection.username" value="root" />
 			<property name="hibernate.connection.password" value="" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 		</properties>
 	</persistence-unit>
 </persistence>

@@ -22,6 +22,10 @@ public class FunctionService {
 	@Autowired
 	private FunctionValidator functionValidator;
 
+	public Function loadFunctionByName(String name) {
+		return functionDao.loadFunctionByName(name);
+	}
+	
 	public Function loadFunctionById(Integer id) {
 		return functionDao.loadFunctionById(id);
 	}
@@ -54,6 +58,15 @@ public class FunctionService {
 		functionValidator.validate(function, bindingResult);
 		errors.addAll(bindingResult.getAllErrors());
 		return errors;
+	}
+	
+	public boolean checkIfFunctionNameIsAlreadyExisting(String functionName, Integer functionId) {
+		boolean alreadyExisting = false;
+		Function storedFunction = this.loadFunctionByName(functionName);
+		if(storedFunction != null && !storedFunction.getId().equals(functionId)) {
+			alreadyExisting = true;
+		}
+		return alreadyExisting;
 	}
 
 }

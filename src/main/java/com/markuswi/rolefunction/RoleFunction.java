@@ -1,5 +1,6 @@
 package com.markuswi.rolefunction;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class RoleFunction {
 	@ManyToOne
 	private Role role;
 
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Function function;
 
 	public Role getRole() {

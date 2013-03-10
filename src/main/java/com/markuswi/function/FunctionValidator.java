@@ -17,11 +17,14 @@ public class FunctionValidator implements Validator {
 	public void validate(Object object, Errors errors) {
 		Function function = (Function) object;
 		
+		
+		
 		if(function.getName() == null) {
 			errors.rejectValue("", FunctionValidator.FUNCTION_NAME_NULL, "Fehler beim Verarbeiten der Funktion" );
 		} else if(function.getName().isEmpty() || !function.getName().matches("[a-zA-z0-9\\.\\-\\_\\+]*")) {
-			errors.rejectValue("", FunctionValidator.FUNCTION_NAME_INVALID_FORMAT, "Bitte prüfen Sie das Format des angegebenen Namens");
+			errors.rejectValue("", FunctionValidator.FUNCTION_NAME_INVALID_FORMAT, "Bitte prüfen Sie das Format der angegebenen Beschreibung");
 		}
+		
 		
 	}
 

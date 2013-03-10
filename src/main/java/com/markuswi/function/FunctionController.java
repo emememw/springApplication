@@ -48,11 +48,15 @@ public class FunctionController {
 			Function storedFunction = functionService.loadFunctionById(function.getId());
 			if (storedFunction != null) {
 				storedFunction.setName(function.getName());
+				storedFunction.setDescription(function.getDescription());
 				function = storedFunction;
 			}
 		}
 
 		List<ObjectError> errors = functionService.checkIfFunctionIsValid(function);
+		if(functionService.checkIfFunctionNameIsAlreadyExisting(function.getName(), function.getId())) {
+			errors.add(new ObjectError("", "Eine Funktion mit diesem Namen existiert bereits!"));
+		}
 		if (errors.isEmpty()) {
 			functionService.saveFunction(function);
 		} else {

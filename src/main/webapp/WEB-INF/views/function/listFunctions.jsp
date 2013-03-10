@@ -9,7 +9,7 @@
 <c:forEach items="${functions}" var="function">
 	<li>
 		<form action="editFunction/${function.id}" method="GET">
-			${function.name}
+			${function.description}
 			<input type="submit" value="bearbeiten">
 		</form>
 	</li>
