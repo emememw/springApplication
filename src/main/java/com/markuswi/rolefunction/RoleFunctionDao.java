@@ -21,6 +21,11 @@ public class RoleFunctionDao {
 		entityManager.flush();
 		return roleFunction;
 	}
+	
+	public RoleFunction loadRoleFunctionById(Integer id) {
+		RoleFunction role = entityManager.find(RoleFunction.class, id);
+		return role;
+	}
 
 	public RoleFunction loadRoleFunctionByFunctionAndRole(Integer functionId, String roleId) {
 		RoleFunction roleFunction = null;

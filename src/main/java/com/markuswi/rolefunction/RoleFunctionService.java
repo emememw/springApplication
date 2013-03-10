@@ -45,4 +45,8 @@ public class RoleFunctionService {
 		return roleFunction;
 	}
 	
+	public RoleFunction loadRoleFunctionById(Integer id) {
+		return roleFunctionDao.loadRoleFunctionById(id);
+	}
+	
 }

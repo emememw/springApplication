@@ -28,6 +28,26 @@ public class RoleFunction {
 
 	@ManyToOne(cascade = CascadeType.REMOVE)
 	private Function function;
+	
+	@Column
+	private boolean readable;
+	
+	@Column
+	private boolean writeable;
+	
+	@Column
+	private boolean deleteable;
+	
+	@Column
+	private boolean deactivateable;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public Role getRole() {
 		return role;
@@ -45,12 +65,37 @@ public class RoleFunction {
 		this.function = function;
 	}
 
-	public Integer getId() {
-		return id;
+	public boolean isReadable() {
+		return readable;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setReadable(boolean readable) {
+		this.readable = readable;
 	}
+
+	public boolean isWriteable() {
+		return writeable;
+	}
+
+	public void setWriteable(boolean writeable) {
+		this.writeable = writeable;
+	}
+
+	public boolean isDeleteable() {
+		return deleteable;
+	}
+
+	public void setDeleteable(boolean deleteable) {
+		this.deleteable = deleteable;
+	}
+
+	public boolean isDeactivateable() {
+		return deactivateable;
+	}
+
+	public void setDeactivateable(boolean deactivateable) {
+		this.deactivateable = deactivateable;
+	}
+
 
 }

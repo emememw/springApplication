@@ -20,8 +20,8 @@ public class Role {
 	@Id
 	private String id;
 	
-	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-	private List<RoleFunction> roleFunction = new LinkedList<RoleFunction>();
+	@OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
+	private List<RoleFunction> roleFunctions = new LinkedList<RoleFunction>();
 
 	public String getId() {
 		return id;
@@ -31,12 +31,12 @@ public class Role {
 		this.id = id;
 	}
 
-	public List<RoleFunction> getRoleFunction() {
-		return roleFunction;
+	public List<RoleFunction> getRoleFunctions() {
+		return roleFunctions;
 	}
 
-	public void setRoleFunction(List<RoleFunction> roleFunction) {
-		this.roleFunction = roleFunction;
+	public void setRoleFunctions(List<RoleFunction> roleFunction) {
+		this.roleFunctions = roleFunction;
 	}
 	
 	
