@@ -26,6 +26,39 @@
 	<label>Beschreibung:</label>
 	<form:input path="description"/>
 	
+	<br>
+	<br>
+	
+	<table border="1">
+		<tr>
+			<th>Typ</th>
+			<th>Default-Wert</th>
+			<th>Editierbar</th>
+		</tr>
+		<tr>
+			<td>Lesen</td>
+			<td><form:checkbox path="readableByDefault"/></td>
+			<td><form:checkbox path="readableEditable"/></td>
+		</tr>
+		<tr>
+			<td>Schreiben</td>
+			<td><form:checkbox path="writeableByDefault"/></td>
+			<td><form:checkbox path="writeableEditable"/></td>
+		</tr>
+		<tr>
+			<td>Löschen</td>
+			<td><form:checkbox path="deleteableByDefault"/></td>
+			<td><form:checkbox path="deleteableEditable"/></td>
+		</tr>
+		<tr>
+			<td>Deaktivieren</td>
+			<td><form:checkbox path="deactivateableByDefault"/></td>
+			<td><form:checkbox path="deactivateableEditable"/></td>
+		</tr>
+	</table>
+	
+	<br>
+	
 	<input type="submit" value="speichern">
 
 </form:form>

@@ -42,14 +42,21 @@ public class RoleFunctionController {
 		for (RoleFunction roleFunction : role.getRoleFunctions()) {
 			RoleFunction storedRoleFunction = roleFunctionService.loadRoleFunctionById(roleFunction.getId());
 			if (storedRoleFunction != null) {
-				storedRoleFunction.setReadable(roleFunction.isReadable());
-				storedRoleFunction.setWriteable(roleFunction.isWriteable());
-				storedRoleFunction.setDeleteable(roleFunction.isDeleteable());
-				storedRoleFunction.setDeactivateable(roleFunction.isDeactivateable());
+				if (storedRoleFunction.getFunction().isReadableEditable()) {
+					storedRoleFunction.setReadable(roleFunction.isReadable());
+				}
+				if (storedRoleFunction.getFunction().isWriteableEditable()) {
+					storedRoleFunction.setWriteable(roleFunction.isWriteable());
+				}
+				if (storedRoleFunction.getFunction().isDeleteableEditable()) {
+					storedRoleFunction.setDeleteable(roleFunction.isDeleteable());
+				}
+				if (storedRoleFunction.getFunction().isDeactivateableEditable()) {
+					storedRoleFunction.setDeactivateable(roleFunction.isDeactivateable());
+				}
 				roleFunctionService.saveRoleFunction(storedRoleFunction);
 			}
 		}
-
 		return new ModelAndView(redirectView);
 	}
 

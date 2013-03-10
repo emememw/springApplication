@@ -17,10 +17,11 @@
 			<tr>
 				<td>${roleFunction.function.description}</td>
 				<td>${roleFunction.function.name}</td>
-				<td><form:checkbox path="roleFunctions[${index.index}].readable"/></td>
-				<td><form:checkbox path="roleFunctions[${index.index}].writeable"/></td>
-				<td><form:checkbox path="roleFunctions[${index.index}].deleteable"/></td>
-				<td><form:checkbox path="roleFunctions[${index.index}].deactivateable"/><form:hidden path="roleFunctions[${index.index}].id"/></td>
+				<td><form:checkbox path="roleFunctions[${index.index}].readable" disabled="${!roleFunction.function.readableEditable}"/></td>
+				<td><form:checkbox path="roleFunctions[${index.index}].writeable" disabled="${!roleFunction.function.writeableEditable}"/></td>
+				<td><form:checkbox path="roleFunctions[${index.index}].deleteable" disabled="${!roleFunction.function.deleteableEditable}"/></td>
+				<td><form:checkbox path="roleFunctions[${index.index}].deactivateable" disabled="${!roleFunction.function.deactivateableEditable}"/>
+				<form:hidden path="roleFunctions[${index.index}].id"/></td>
 			</tr>
 		</c:forEach>
 </table>

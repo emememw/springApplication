@@ -49,6 +49,19 @@ public class FunctionController {
 			if (storedFunction != null) {
 				storedFunction.setName(function.getName());
 				storedFunction.setDescription(function.getDescription());
+				
+				storedFunction.setReadableByDefault(function.isReadableByDefault());
+				storedFunction.setReadableEditable(function.isReadableEditable());
+				
+				storedFunction.setWriteableByDefault(function.isWriteableByDefault());
+				storedFunction.setWriteableEditable(function.isWriteableEditable());
+				
+				storedFunction.setDeleteableByDefault(function.isDeleteableByDefault());
+				storedFunction.setDeleteableEditable(function.isDeleteableEditable());
+				
+				storedFunction.setDeactivateableByDefault(function.isDeactivateableByDefault());
+				storedFunction.setDeactivateableEditable(function.isDeactivateableEditable());
+				
 				function = storedFunction;
 			}
 		}
