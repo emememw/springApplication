@@ -20,6 +20,9 @@ public class Role {
 	@Id
 	private String id;
 	
+	@Column
+	private String navigationPointId;
+	
 	@OneToMany(mappedBy = "role", fetch = FetchType.EAGER)
 	private List<RoleFunction> roleFunctions = new LinkedList<RoleFunction>();
 
@@ -38,6 +41,16 @@ public class Role {
 	public void setRoleFunctions(List<RoleFunction> roleFunction) {
 		this.roleFunctions = roleFunction;
 	}
+
+	public String getNavigationPointId() {
+		return navigationPointId;
+	}
+
+	public void setNavigationPointId(String navigationPointId) {
+		this.navigationPointId = navigationPointId;
+	}
+
+	
 	
 	
 	

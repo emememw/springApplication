@@ -1,5 +1,8 @@
 package com.markuswi.rolefunction;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,6 +34,11 @@ public class RoleFunctionController {
 		Role role = roleService.loadRoleById(roleId);
 		if (role != null) {
 			modelAndView.addObject("role", role);
+			/***/
+			List<String> navigationPoints = new LinkedList<String>();
+			navigationPoints.add("Navigationsverwaltung");
+			navigationPoints.add("Sprachenverwaltung");
+			modelAndView.addObject("navigationPoints", navigationPoints);
 		}
 		return modelAndView;
 	}
@@ -39,6 +47,13 @@ public class RoleFunctionController {
 	public ModelAndView saveRoleFunctions(@ModelAttribute Role role) {
 		RedirectView redirectView = new RedirectView(RoleFunctionController.LIST_ROLE_FUNCTIONS_BY_ROLE_MAPPING + "/" + role.getId(), true);
 		redirectView.setExposeModelAttributes(false);
+		
+		Role storedRole = roleService.loadRoleById(role.getId());
+		if(storedRole != null) {
+			storedRole.setNavigationPointId(role.getNavigationPointId());
+			roleService.saveRole(storedRole);
+		}
+		
 		for (RoleFunction roleFunction : role.getRoleFunctions()) {
 			RoleFunction storedRoleFunction = roleFunctionService.loadRoleFunctionById(roleFunction.getId());
 			if (storedRoleFunction != null) {

@@ -3,7 +3,19 @@
 
 <h1>Rolle: ${role.id}</h1>
 
-<form:form action="${pageContext.request.contextPath}/saveRoleFunctions" method="POST" commandName="role"> 
+
+
+<form:form action="${pageContext.request.contextPath}/saveRoleFunctions"
+	method="POST" commandName="role">
+
+	<label>StartNavigation:</label>
+
+	<form:select path="navigationPointId">
+		<form:option value="NONE" label="" />
+		<form:options items="${navigationPoints}" />
+	</form:select>
+
+
 	<table border="1">
 		<tr>
 			<th>Funktion</th>
@@ -13,20 +25,33 @@
 			<th>Löschen</th>
 			<th>Deaktivieren</th>
 		</tr>
-		<c:forEach items="${role.roleFunctions}" var="roleFunction" varStatus="index">
+		<c:forEach items="${role.roleFunctions}" var="roleFunction"
+			varStatus="index">
 			<tr>
 				<td>${roleFunction.function.description}</td>
 				<td>${roleFunction.function.name}</td>
-				<td><form:checkbox path="roleFunctions[${index.index}].readable" disabled="${!roleFunction.function.readableEditable}"/></td>
-				<td><form:checkbox path="roleFunctions[${index.index}].writeable" disabled="${!roleFunction.function.writeableEditable}"/></td>
-				<td><form:checkbox path="roleFunctions[${index.index}].deleteable" disabled="${!roleFunction.function.deleteableEditable}"/></td>
-				<td><form:checkbox path="roleFunctions[${index.index}].deactivateable" disabled="${!roleFunction.function.deactivateableEditable}"/>
-				<form:hidden path="roleFunctions[${index.index}].id"/></td>
+				<td><form:checkbox
+						path="roleFunctions[${index.index}].readable"
+						disabled="${!roleFunction.function.readableEditable}" />
+				</td>
+				<td><form:checkbox
+						path="roleFunctions[${index.index}].writeable"
+						disabled="${!roleFunction.function.writeableEditable}" />
+				</td>
+				<td><form:checkbox
+						path="roleFunctions[${index.index}].deleteable"
+						disabled="${!roleFunction.function.deleteableEditable}" />
+				</td>
+				<td><form:checkbox
+						path="roleFunctions[${index.index}].deactivateable"
+						disabled="${!roleFunction.function.deactivateableEditable}" /> <form:hidden
+						path="roleFunctions[${index.index}].id" />
+				</td>
 			</tr>
 		</c:forEach>
-</table>
+	</table>
 
-<form:hidden path="id"/>
-<input type="submit" value="speichern">
+	<form:hidden path="id" />
+	<input type="submit" value="speichern">
 
 </form:form>
