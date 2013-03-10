@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.markuswi.function.Function;
+import com.markuswi.function.FunctionService;
 import com.markuswi.role.Role;
 import com.markuswi.role.RoleService;
 
@@ -17,6 +18,9 @@ public class RoleFunctionService {
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private FunctionService functionService;
 	
 	public RoleFunction saveRoleFunction(RoleFunction roleFunction) {
 		return roleFunctionDao.saveRoleFunction(roleFunction);
@@ -30,6 +34,15 @@ public class RoleFunctionService {
 			roleFunction.setRole(role);
 			this.saveRoleFunction(roleFunction);
 		}
+	}
+
+	public RoleFunction loadRoalFunctionByFunctionNameAndRole(String functionName, String roleId) {
+		RoleFunction roleFunction = null;
+		Function function = functionService.loadFunctionByName(functionName);
+		if(function != null) {
+			roleFunction = roleFunctionDao.loadRoleFunctionByFunctionAndRole(function.getId(), roleId);
+		}
+		return roleFunction;
 	}
 	
 }
