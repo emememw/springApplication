@@ -3,8 +3,11 @@ package com.markuswi.function;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +20,7 @@ public class FunctionController {
 
 	@Autowired
 	private FunctionService functionService;
+	
 
 	private static final String LIST_FUNCTIONS_MAPPING = "/listFunctions";
 	private static final String LIST_FUNCTIONS_VIEW = "function/listFunctions";
@@ -25,7 +29,8 @@ public class FunctionController {
 	private static final String SAVE_FUNCTION_MAPPING = "/saveFunction";
 	private static final String EDIT_FUNCTION_MAPPING = "/editFunction";
 	private static final String DELETE_FUNCTION_MAPPING = "/deleteFunction";
-
+	
+	//@PreAuthorize("@templateSecurityService.hasPermission('test12')")
 	@RequestMapping(method = RequestMethod.GET, value = FunctionController.LIST_FUNCTIONS_MAPPING)
 	public ModelAndView listFunctions() {
 		ModelAndView modelAndView = new ModelAndView(FunctionController.LIST_FUNCTIONS_VIEW);
@@ -37,6 +42,7 @@ public class FunctionController {
 	public ModelAndView newFunction() {
 		ModelAndView modelAndView = new ModelAndView(FunctionController.EDIT_FUNCTION_VIEW);
 		modelAndView.addObject("function", new Function());
+		modelAndView.addObject("allFunctions", functionService.loadAllFunctions());
 		return modelAndView;
 	}
 
@@ -62,6 +68,8 @@ public class FunctionController {
 				storedFunction.setDeactivateableByDefault(function.isDeactivateableByDefault());
 				storedFunction.setDeactivateableEditable(function.isDeactivateableEditable());
 				
+				storedFunction.setParentFunctionId(function.getParentFunctionId());
+				
 				function = storedFunction;
 			}
 		}
@@ -85,7 +93,8 @@ public class FunctionController {
 		ModelAndView modelAndView = new ModelAndView(FunctionController.EDIT_FUNCTION_VIEW);
 
 		modelAndView.addObject("function", functionService.loadFunctionById(id));
-
+		modelAndView.addObject("allFunctions", functionService.loadAllFunctions());
+		
 		return modelAndView;
 	}
 	

@@ -17,18 +17,18 @@
 
 <form:form action="${pageContext.request.contextPath}/saveFunction"
 	method="POST" commandName="function">
-	
-	<form:hidden path="id"/>
-	
+
+	<form:hidden path="id" />
+
 	<label>Name:</label>
 	<form:input path="name" />
-	
+
 	<label>Beschreibung:</label>
-	<form:input path="description"/>
-	
+	<form:input path="description" />
+
 	<br>
 	<br>
-	
+
 	<table border="1">
 		<tr>
 			<th>Typ</th>
@@ -37,28 +37,37 @@
 		</tr>
 		<tr>
 			<td>Lesen</td>
-			<td><form:checkbox path="readableByDefault"/></td>
-			<td><form:checkbox path="readableEditable"/></td>
+			<td><form:checkbox path="readableByDefault" /></td>
+			<td><form:checkbox path="readableEditable" /></td>
 		</tr>
 		<tr>
 			<td>Schreiben</td>
-			<td><form:checkbox path="writeableByDefault"/></td>
-			<td><form:checkbox path="writeableEditable"/></td>
+			<td><form:checkbox path="writeableByDefault" /></td>
+			<td><form:checkbox path="writeableEditable" /></td>
 		</tr>
 		<tr>
 			<td>Löschen</td>
-			<td><form:checkbox path="deleteableByDefault"/></td>
-			<td><form:checkbox path="deleteableEditable"/></td>
+			<td><form:checkbox path="deleteableByDefault" /></td>
+			<td><form:checkbox path="deleteableEditable" /></td>
 		</tr>
 		<tr>
 			<td>Deaktivieren</td>
-			<td><form:checkbox path="deactivateableByDefault"/></td>
-			<td><form:checkbox path="deactivateableEditable"/></td>
+			<td><form:checkbox path="deactivateableByDefault" /></td>
+			<td><form:checkbox path="deactivateableEditable" /></td>
 		</tr>
 	</table>
-	
+
 	<br>
-	
+
+	<label>Übergeordnete Funktion:</label>
+	<form:select path="parentFunctionId">
+		<form:option value="${null}" label=""  />
+		<form:options items="${allFunctions}" itemLabel="description" itemValue="id"/>
+	</form:select>
+
+	<br>
+	<br>
+
 	<input type="submit" value="speichern">
 
 </form:form>

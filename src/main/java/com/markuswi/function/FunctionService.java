@@ -1,7 +1,9 @@
 package com.markuswi.function;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,6 +69,33 @@ public class FunctionService {
 			alreadyExisting = true;
 		}
 		return alreadyExisting;
+	}
+	
+	public Set<Integer> getChildFunctionIdsRecursive(Function currentFunction, List<Function> allFunctions) {
+		Set<Integer> childFunctions = new HashSet<Integer>();
+		if(currentFunction.getId() != null) {
+			for(Function function : allFunctions) {
+				if(function.getParentFunctionId() != null && function.getParentFunctionId().equals(currentFunction.getId())) {
+					childFunctions.add(function.getId());
+					childFunctions.addAll(this.getChildFunctionIdsRecursive(function, allFunctions));
+				}
+			}
+		}
+		return childFunctions;
+	}
+	
+	public List<Function> getPotentialParents(Function currentFunction, List<Function> allFunctions) {
+		Set<Integer> allChildFunctions = new HashSet<Integer>();
+		if(currentFunction.getId() != null) {
+			allChildFunctions.addAll(this.getChildFunctionIdsRecursive(currentFunction, allFunctions));
+		}
+		List<Function> potentialParents = new LinkedList<Function>();
+		for(Function function : allFunctions) {
+			if(!function.getId().equals(currentFunction.getId()) && !allChildFunctions.contains(function.getId())) {
+				potentialParents.add(function);
+			}
+		}
+		return potentialParents;
 	}
 
 }

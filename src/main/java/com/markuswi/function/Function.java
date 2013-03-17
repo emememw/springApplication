@@ -3,11 +3,13 @@ package com.markuswi.function;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -54,6 +56,9 @@ public class Function {
 
 	@OneToMany(mappedBy = "function", orphanRemoval = true)
 	private List<RoleFunction> roleFunctions = new LinkedList<RoleFunction>();
+	
+	@Column
+	Integer parentFunctionId;
 
 	public Integer getId() {
 		return id;
@@ -150,6 +155,16 @@ public class Function {
 	public void setRoleFunctions(List<RoleFunction> roleFunctions) {
 		this.roleFunctions = roleFunctions;
 	}
+
+	public Integer getParentFunctionId() {
+		return parentFunctionId;
+	}
+
+	public void setParentFunctionId(Integer parentFunctionId) {
+		this.parentFunctionId = parentFunctionId;
+	}
+
+	
 
 	
 	

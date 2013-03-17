@@ -30,7 +30,7 @@ public class RoleFunctionDao {
 	public RoleFunction loadRoleFunctionByFunctionAndRole(Integer functionId, String roleId) {
 		RoleFunction roleFunction = null;
 
-		Query query = entityManager.createQuery("from RoleFunction roleFunction where roleFunction.function_id :functionId and roleFunction.role_id : roleId");
+		Query query = entityManager.createQuery("from RoleFunction roleFunction where roleFunction.function.id =  :functionId and roleFunction.role.id  = :roleId");
 		query.setParameter("functionId", functionId);
 		query.setParameter("roleId", roleId);
 		try {
