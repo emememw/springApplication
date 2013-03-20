@@ -30,7 +30,7 @@ public class FunctionController {
 	private static final String EDIT_FUNCTION_MAPPING = "/editFunction";
 	private static final String DELETE_FUNCTION_MAPPING = "/deleteFunction";
 	
-	//@PreAuthorize("@templateSecurityService.hasPermission('test12')")
+	@PreAuthorize("@templateSecurityService.hasPermission('test12')")
 	@RequestMapping(method = RequestMethod.GET, value = FunctionController.LIST_FUNCTIONS_MAPPING)
 	public ModelAndView listFunctions() {
 		ModelAndView modelAndView = new ModelAndView(FunctionController.LIST_FUNCTIONS_VIEW);

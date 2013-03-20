@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
-	 xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -13,7 +13,7 @@
 	<!-- Scans within the base package of the application for @Components to 
 		configure as beans -->
 	<!-- @Controller, @Service, @Configuration, etc. -->
-	<context:component-scan base-package="net.iamdarren" />
+	<context:component-scan base-package="com.markuswi" />
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<mvc:annotation-driven />
@@ -44,12 +44,12 @@
 				<property name="databasePlatform" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			</bean>
 		</property>
-		
+
 	</bean>
 
 
-	
-    	
+
+
 
 	<context:component-scan base-package="com.markuswi" />
 	<context:annotation-config />
@@ -60,29 +60,77 @@
 
 	<tx:annotation-driven />
 
-<!--
-<bean id="securitInitializer" class="com.markuswi.security.SecurityInitializer" init-method="init"/>
-<security:global-method-security pre-post-annotations="enabled">
-    </security:global-method-security>
 
-<bean id="http403EntryPoint" class="org.springframework.security.web.authentication.Http403ForbiddenEntryPoint">
-    </bean>
-    
-    <security:http auto-config='true'>
-    <security:intercept-url pattern="/**" access="ROLE_USER" />
-    <security:http-basic />
-    <security:anonymous />
-  </security:http>
-    
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider ref='preAuthenticatedAuthenticationProvider'/>
-    </security:authentication-manager>
+	<!-- Security Settings -->
+	<!-- 
+	<bean id="securitInitializer" class="com.markuswi.security.SecurityInitializer"
+		init-method="init" />
+		 -->
+	<security:global-method-security
+		pre-post-annotations="enabled">
+	</security:global-method-security>
 
- <bean id="preAuthenticatedAuthenticationProvider" class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
-        <property name="preAuthenticatedUserDetailsService" ref="preAuthenticatedUserDetailsService"/>
-    </bean>
+ 	<security:http pattern="/login*" security="none"/>
+ 	<security:http pattern="/WEB-INF/views/login.jsp*" security="none"/>
+	<security:http auto-config="true" use-expressions="true">
+		<!-- https? -->
+		
+		<!--<security:intercept-url pattern="/" access="permitAll()" />
+		<security:intercept-url pattern="/login" access="permitAll()" />	
+		<security:intercept-url pattern="/j_spring_security_check"
+			requires-channel="http" access="permitAll()"/>
+			
+			<security:intercept-url pattern="/WEB-INF/views/**" access="permitAll()" />-->	
+		
+		<security:intercept-url pattern="/**"
+			requires-channel="http" access="hasRole('ROLE_USER')" />
+			
+			
+			
+			
+			
 
-    <bean id="preAuthenticatedUserDetailsService"
-            class="org.springframework.security.web.authentication.preauth.PreAuthenticatedGrantedAuthoritiesUserDetailsService"/>
--->
+		<!-- form login -->
+		<security:form-login login-page="/login" 
+			login-processing-url="/j_spring_security_check"
+			authentication-failure-url="/login?login_error=1"
+			default-target-url="/loginSuccess" />
+
+		<!-- logout -->
+		<security:logout logout-url="/j_spring_security_logout" />
+
+		<!-- remember me -->
+		<security:remember-me key="rememberMeKey"
+			user-service-ref="userDetailsService" />
+
+	</security:http>
+	
+	
+
+	<!-- authentication manager and password hashing -->
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider ref="daoAuthenticationProvider" />
+	</security:authentication-manager>
+
+	<bean id="daoAuthenticationProvider"
+		class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+		<property name="userDetailsService" ref="userDetailsService" />
+		<property name="saltSource">
+			<bean
+				class="org.springframework.security.authentication.dao.ReflectionSaltSource">
+				<property name="userPropertyToUse" value="username" />
+			</bean>
+		</property>
+		<property name="passwordEncoder" ref="passwordEncoder" />
+	</bean>
+
+	<bean id="userDetailsService" name="userAuthenticationProvider"
+		class="com.markuswi.security.AuthenticationUserDetailsGetter">
+	</bean>
+
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder">
+	</bean>
+
+
 </beans>
